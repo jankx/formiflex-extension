@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "formiflex/message",
+  "title": "Message",
+  "description": "Message for form submissions.",
+  "category": "formiflex",
+  "ancestor": [
+    "formiflex/form"
+  ],
+  "icon": "megaphone",
+  "textdomain": "formiflex",
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "background": {
+      "type": "string",
+      "default": "#dedede"
+    },
+    "color": {
+      "type": "string",
+      "default": ""
+    },
+    "errorBgColor": {
+      "type": "string"
+    },
+    "customErrorBgColor": {
+      "type": "string"
+    },
+    "errorTextColor": {
+      "type": "string"
+    },
+    "customErrorTextColor": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "interactivity": true,
+    "html": false,
+    "lock": true,
+    "reusable": false,
+    "inserter": true,
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": [
+        "top",
+        "bottom"
+      ]
+    },
+    "__experimentalBorder": {
+      "radius": true,
+      "width": true,
+      "color": true,
+      "style": true
+    },
+    "typography": {
+      "fontSize": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

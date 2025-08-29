@@ -1,0 +1,25 @@
+{
+    "name": "jankx/formiflex",
+    "description": "Formiflex Extension",
+    "autoload": {
+        "psr-4": {
+            "Jankx\\Extensions\\Formiflex\\": "includes/"
+        }
+    },
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Puleeno Nguyen",
+            "email": "puleeno@gmail.com"
+        }
+    ],
+    "require": {
+        "appsero/client": "dev-develop",
+        "katzgrau/klogger": "dev-master",
+        "rakit/validation": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6",
+        "yoast/phpunit-polyfills": "^3.1"
+    }
+}

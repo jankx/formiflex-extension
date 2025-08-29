@@ -1,0 +1,92 @@
+{
+    "extension_id": "formiflex",
+    "name": "Formiflex",
+    "version": "2.7.1",
+    "description": "Lightweight Gutenberg contact form builder, blazingly fast with no external dependencies and ReCaptcha support.",
+    "author": "Jankx Team",
+    "license": "GPL-2.0+",
+    "requires": "6.6",
+    "tested": "6.8",
+    "requires_php": "7.0",
+    "dependencies": {
+        "jankx": "2.0.0"
+    },
+    "caller": {
+        "class": "Jankx\\Extensions\\Formiflex\\FormiflexExtension",
+        "file": "includes/FormiflexExtension.php",
+        "method": "register_hooks",
+        "args": [],
+        "autoload": true,
+        "priority": 10
+    },
+    "blocks": [
+        {
+            "name": "formiflex/form",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        },
+        {
+            "name": "formiflex/input",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        },
+        {
+            "name": "formiflex/textarea",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        },
+        {
+            "name": "formiflex/select",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        },
+        {
+            "name": "formiflex/button",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        },
+        {
+            "name": "formiflex/fieldset",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        },
+        {
+            "name": "formiflex/message",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        },
+        {
+            "name": "formiflex/output",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        },
+        {
+            "name": "formiflex/multichoices",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        },
+        {
+            "name": "formiflex/library",
+            "class": "Formiflex\\Blocks",
+            "file": "includes/Blocks.php"
+        }
+    ],
+    "assets": {
+        "admin": {
+            "css": ["build/style-admin.css"],
+            "js": ["build/admin.js", "build/form-settings.js", "build/field-variations.js"]
+        },
+        "frontend": {
+            "css": [],
+            "js": []
+        }
+    },
+    "hooks": {
+        "init": ["register_blocks"],
+        "wp_enqueue_scripts": ["enqueue_frontend_assets"],
+        "enqueue_block_editor_assets": ["enqueue_editor_assets"],
+        "admin_enqueue_scripts": ["enqueue_admin_assets"]
+    },
+    "textdomain": "formiflex",
+    "domain_path": "/languages"
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json.schemastore.org/block.json",
+  "apiVersion": 3,
+  "name": "formiflex/form",
+  "title": "Form",
+  "description": "A block collection to build forms.",
+  "category": "formiflex",
+  "textdomain": "formiflex",
+  "keywords": [
+    "form",
+    "forms",
+    "formiflex"
+  ],
+  "allowedBlocks": [
+    "core/paragraph",
+    "core/heading",
+    "core/columns",
+    "core/group",
+    "core/separator",
+    "formiflex/message",
+    "formiflex/input",
+    "formiflex/textarea",
+    "formiflex/button",
+    "formiflex/output",
+    "formiflex/fieldset",
+    "formiflex/select",
+    "formiflex/multichoices"
+  ],
+  "providesContext": {
+    "formiflex/requiredText": "requiredText"
+  },
+  "attributes": {
+    "action": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "action"
+    },
+    "requiredText": {
+      "type": "string",
+      "default": "*"
+    },
+    "autoComplete": {
+      "enum": [
+        "on",
+        "off"
+      ],
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "autocomplete"
+    },
+    "noValidate": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "novalidate",
+      "default": true
+    }
+  },
+  "styles": [
+    {
+      "name": "regular",
+      "label": "Default",
+      "isDefault": true
+    },
+    {
+      "name": "modern",
+      "label": "Modern"
+    }
+  ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
