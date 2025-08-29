@@ -3,7 +3,7 @@
     "description": "Formiflex Extension",
     "autoload": {
         "psr-4": {
-            "Jankx\\Extensions\\Formiflex\\": "includes/"
+            "Formiflex\\": "includes/"
         }
     },
     "license": "GPL-2.0-or-later",

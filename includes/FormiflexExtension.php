@@ -2,10 +2,10 @@
 /**
  * Formiflex Extension
  *
- * @package Jankx\Extensions\Formiflex
+ * @package Formiflex
  */
 
-namespace Jankx\Extensions\Formiflex;
+namespace Formiflex;
 
 use Jankx\Extensions\Extension;
 
@@ -33,7 +33,7 @@ class FormiflexExtension extends Extension
         $this->load_formiflex_plugin();
 
         // Register extension hooks
-        add_action('init', [$this, 'init_extension']);
+        add_action('init', [$this, 'init_extension'], 5);
     }
 
     /**
@@ -123,14 +123,32 @@ class FormiflexExtension extends Extension
      */
     protected function load_formiflex_plugin(): void
     {
-        // Include the original plugin files
-        require_once $this->get_extension_path() . '/includes/Plugin.php';
-        require_once $this->get_extension_path() . '/vendor/autoload.php';
+        try {
+            // Include the original plugin files
+            $plugin_file = $this->get_extension_path() . '/includes/Plugin.php';
+            $autoload_file = $this->get_extension_path() . '/vendor/autoload.php';
 
-        // Initialize the plugin with correct path
-        $plugin_file = $this->get_extension_path() . '/includes/Plugin.php';
-        $this->plugin = new \Formiflex\Plugin($plugin_file);
-        $this->plugin->run();
+            if (!file_exists($plugin_file)) {
+                error_log('Formiflex: Plugin.php not found at ' . $plugin_file);
+                return;
+            }
+
+            if (!file_exists($autoload_file)) {
+                error_log('Formiflex: vendor/autoload.php not found at ' . $autoload_file);
+                return;
+            }
+
+            require_once $plugin_file;
+            require_once $autoload_file;
+
+            // Initialize the plugin
+            $this->plugin = new \Formiflex\Plugin($plugin_file);
+            $this->plugin->run();
+
+            error_log('Formiflex: Plugin loaded successfully');
+        } catch (Exception $e) {
+            error_log('Formiflex: Error loading plugin: ' . $e->getMessage());
+        }
     }
 
     /**

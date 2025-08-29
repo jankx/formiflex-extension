@@ -19,58 +19,6 @@
         "autoload": true,
         "priority": 10
     },
-    "blocks": [
-        {
-            "name": "formiflex/form",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        },
-        {
-            "name": "formiflex/input",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        },
-        {
-            "name": "formiflex/textarea",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        },
-        {
-            "name": "formiflex/select",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        },
-        {
-            "name": "formiflex/button",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        },
-        {
-            "name": "formiflex/fieldset",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        },
-        {
-            "name": "formiflex/message",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        },
-        {
-            "name": "formiflex/output",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        },
-        {
-            "name": "formiflex/multichoices",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        },
-        {
-            "name": "formiflex/library",
-            "class": "Formiflex\\Blocks",
-            "file": "includes/Blocks.php"
-        }
-    ],
     "assets": {
         "admin": {
             "css": ["build/style-admin.css"],

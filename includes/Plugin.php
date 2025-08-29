@@ -112,7 +112,7 @@ class Plugin {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/Utils/register-cpt.php';
 		require_once plugin_dir_path( __DIR__ ) . 'includes/Utils/register-settings.php';
 
-		$this->loader = new Loader();
+		$this->loader = new \Formiflex\Loader();
 	}
 
 	/**
@@ -126,7 +126,7 @@ class Plugin {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new I18n();
+		$plugin_i18n = new \Formiflex\I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 	}
@@ -140,13 +140,13 @@ class Plugin {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Admin( $this->plugin_name, $this->version, $this->entry_point );
+		$plugin_admin = new \Formiflex\Admin( $this->plugin_name, $this->version, $this->entry_point );
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_menu' );
 		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_editor_scripts' );
 		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'admin_bar_item', 1000 );
 
-		$activator = new Activator( $this->plugin_name, $this->version, $this->entry_point );
+		$activator = new \Formiflex\Activator( $this->plugin_name, $this->version, $this->entry_point );
 		$this->loader->add_action( 'upgrader_process_complete', $activator, 'update_completed', 10, 2 );
 	}
 
@@ -158,34 +158,34 @@ class Plugin {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-		$blocks = new Blocks( $this->plugin_name, $this->version, $this->entry_point );
+		$blocks = new \Formiflex\Blocks( $this->plugin_name, $this->version, $this->entry_point );
 
 		$this->loader->add_action( 'init', $blocks, 'register_blocks' );
 		$this->loader->add_action( 'init', $blocks, 'register_block_pattern_category' );
 		$this->loader->add_action( 'block_categories_all', $blocks, 'register_block_category' );
 		$this->loader->add_shortcode( 'formiflex', $blocks, 'do_reusable_block' );
 
-		$frontend = new Frontend( $this->plugin_name, $this->version );
+		$frontend = new \Formiflex\Frontend( $this->plugin_name, $this->version );
 
 		$this->loader->add_action( 'wp_ajax_formiflex', $frontend, 'listen_for_submit' );
 		$this->loader->add_action( 'wp_ajax_nopriv_formiflex', $frontend, 'listen_for_submit' );
 
 		// REST handlers.
-		$addons = new Rest\Addons( $this->entry_point );
+		$addons = new \Formiflex\Rest\Addons( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $addons, 'register_routes' );
-		$submissions = new Rest\Submissions( $this->entry_point );
+		$submissions = new \Formiflex\Rest\Submissions( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $submissions, 'register_routes' );
-		$columns = new Rest\Columns( $this->entry_point );
+		$columns = new \Formiflex\Rest\Columns( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $columns, 'register_routes' );
-		$license = new Rest\License( $this->entry_point );
+		$license = new \Formiflex\Rest\License( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $license, 'register_routes' );
-		$importer = new Rest\Importer( $this->entry_point );
+		$importer = new \Formiflex\Rest\Importer( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $importer, 'register_routes' );
-		$settings = new Rest\Settings( $this->entry_point );
+		$settings = new \Formiflex\Rest\Settings( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $settings, 'register_routes' );
 
 		// Cron Tasks.
-		$cron = new Cron( $this->plugin_name, $this->version );
+		$cron = new \Formiflex\Cron( $this->plugin_name, $this->version );
 		$cron->cron();
 
 		$this->loader->add_action( 'formiflex_retrieve_news', $cron, 'get_news' );
@@ -193,7 +193,7 @@ class Plugin {
 		$this->loader->add_action( 'formiflex_delete_tmp', $cron, 'delete_tmp' );
 
 		// Actions.
-		$email = new Actions\Email();
+		$email = new \Formiflex\Actions\Email();
 		$email->hook();
 	}
 
