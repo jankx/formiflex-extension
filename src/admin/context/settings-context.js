@@ -1,0 +1,57 @@
+import { createContext } from '@wordpress/element';
+import { useEntityProp, store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+
+export const SettingsContext = createContext();
+
+function SettingsContextProvider( props ) {
+	const [ settings ] = useEntityProp( 'root', 'site', 'formiflex' );
+
+	const { saveEditedEntityRecord, editEntityRecord } =
+		useDispatch( coreStore );
+
+	const { isSaving, hasEdits } = useSelect(
+		( select ) => ( {
+			isSaving: select( coreStore ).isSavingEntityRecord(
+				'root',
+				'site'
+			),
+			hasEdits: select( coreStore ).hasEditsForEntityRecord(
+				'root',
+				'site',
+				'formiflex'
+			),
+		} ),
+		[]
+	);
+
+	const saveSettings = () => {
+		return saveEditedEntityRecord( 'root', 'site' );
+	};
+
+	const updateSetting = ( key, val ) => {
+		console.log(key, val)
+		editEntityRecord( 'root', 'site', undefined, {
+			formiflex: {
+				...settings,
+				[ key ]: val,
+			},
+		} );
+	};
+
+	return (
+		<SettingsContext.Provider
+			value={ {
+				settings,
+				saveSettings,
+				updateSetting,
+				hasUpdates: hasEdits,
+				isSaving,
+			} }
+		>
+			{ props.children }
+		</SettingsContext.Provider>
+	);
+}
+
+export default SettingsContextProvider;

@@ -57,6 +57,7 @@ class Loader {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+		error_log('Formiflex: Loader constructor called');
 
 		$this->actions = array();
 		$this->filters = array();
@@ -138,17 +139,24 @@ class Loader {
 	 * @since    1.0.0
 	 */
 	public function run() {
+		error_log('Formiflex: Loader run() called');
+		error_log('Formiflex: Total filters to register: ' . count($this->filters));
+		error_log('Formiflex: Total actions to register: ' . count($this->actions));
+		error_log('Formiflex: Total shortcodes to register: ' . count($this->shortcodes));
 
 		foreach ( $this->filters as $hook ) {
 			add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
 
 		foreach ( $this->actions as $hook ) {
+			error_log('Formiflex: Registering action: ' . $hook['hook'] . ' -> ' . get_class($hook['component']) . '::' . $hook['callback']);
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
 
 		foreach ( $this->shortcodes as $hook ) {
 			add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
+
+		error_log('Formiflex: Loader run() completed');
 	}
 }

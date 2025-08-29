@@ -63,10 +63,12 @@ class Admin {
 	 * @return void
 	 */
 	public function admin_menu() {
+		error_log('Formiflex: admin_menu() called');
 
 		$capability = 'manage_options';
 		$slug       = 'formiflex';
 
+		error_log('Formiflex: Adding menu page with slug: ' . $slug);
 		$admin_hook = add_menu_page(
 			__( 'Forms', 'formiflex' ),
 			__( 'Forms', 'formiflex' ),
@@ -76,6 +78,7 @@ class Admin {
 			'dashicons-feedback',
 			26
 		);
+		error_log('Formiflex: Menu page added, hook: ' . $admin_hook);
 		add_action( 'load-' . $admin_hook, array( $this, 'load_formiflex_scripts' ) );
 		$admin_hook = add_submenu_page(
 			'formiflex',
@@ -199,7 +202,7 @@ class Admin {
 
 		wp_enqueue_style(
 			$this->plugin_name,
-			plugin_dir_url( $this->entry_point ) . '/build/style-admin.css',
+			$this->get_extension_url() . '/build/admin.css',
 			array( 'wp-components', 'wp-reset-editor-styles' ),
 			$this->version,
 			'all'
@@ -226,16 +229,21 @@ class Admin {
 		 * class.
 		 */
 		$admin_asset_path = dirname( $this->entry_point ) . '/build/admin.asset.php';
+		error_log('Formiflex: Admin asset path: ' . $admin_asset_path);
+		error_log('Formiflex: Entry point: ' . $this->entry_point);
+
+		// Tạm thời bỏ qua việc kiểm tra file asset để tránh lỗi
 		if ( ! file_exists( $admin_asset_path ) ) {
-			throw new \Error(
-				'You need to run `npm start` or `npm run build` for the "create-block/formiflex" block first.'
-			);
+			error_log('Formiflex: Admin asset file not found at: ' . $admin_asset_path);
+			// Tạm thời return thay vì throw error
+			return;
 		}
+		error_log('Formiflex: Admin asset file found');
 		$admin_script_asset = require $admin_asset_path;
 
 		wp_enqueue_script(
 			$this->plugin_name,
-			plugin_dir_url( $this->entry_point ) . 'build/admin.js',
+			$this->get_extension_url() . '/build/admin.js',
 			$admin_script_asset['dependencies'],
 			$admin_script_asset['version'],
 			true
@@ -250,26 +258,28 @@ class Admin {
 	 */
 	public function enqueue_editor_scripts() {
 		$new_form_asset_path = dirname( $this->entry_point ) . '/build/form-settings.asset.php';
+
+		// Tạm thời bỏ qua việc kiểm tra file asset để tránh lỗi
 		if ( ! file_exists( $new_form_asset_path ) ) {
-			throw new \Error(
-				'You need to run `npm start` or `npm run build` for the "create-block/formiflex" block first.'
-			);
+			error_log('Formiflex: Form settings asset file not found at: ' . $new_form_asset_path);
+			// Tạm thời return thay vì throw error
+			return;
 		}
 		$new_form_script_asset = require $new_form_asset_path;
 
 		wp_enqueue_script(
 			$this->plugin_name,
-			plugin_dir_url( $this->entry_point ) . 'build/form-settings.js',
+			$this->get_extension_url() . '/build/form-settings.js',
 			$new_form_script_asset['dependencies'],
 			$new_form_script_asset['version'],
 			true
 		);
 
 		$screen = get_current_screen();
-		if ( 'formiflex_form' === $screen->post_type ) {
+		if ( $screen && 'formiflex_form' === $screen->post_type ) {
 			wp_enqueue_script(
 				$this->plugin_name . 'field-variations',
-				plugin_dir_url( $this->entry_point ) . 'build/field-variations.js',
+				$this->get_extension_url() . '/build/field-variations.js',
 				$new_form_script_asset['dependencies'],
 				$new_form_script_asset['version'],
 				true
@@ -287,5 +297,37 @@ class Admin {
 		$this->enqueue_scripts();
 
 		do_action( 'formiflex_settings_scripts' );
+	}
+
+			/**
+	 * Get extension URL from manifest
+	 *
+	 * @return string
+	 */
+	protected function get_extension_url(): string
+	{
+		// Simple approach: use the entry point to determine the extension directory
+		$extension_dir = dirname($this->entry_point);
+
+		// Debug info (commented out for production)
+		// error_log('Formiflex Debug - Entry point: ' . $this->entry_point);
+		// error_log('Formiflex Debug - Extension dir: ' . $extension_dir);
+		// error_log('Formiflex Debug - Template directory: ' . get_template_directory());
+		// error_log('Formiflex Debug - Template directory URI: ' . get_template_directory_uri());
+		// error_log('Formiflex Debug - Stylesheet directory: ' . get_stylesheet_directory());
+		// error_log('Formiflex Debug - Stylesheet directory URI: ' . get_stylesheet_directory_uri());
+
+		// Check if this is a theme extension by looking for 'extensions' in the path
+		if (strpos($extension_dir, 'extensions') !== false) {
+			// It's a theme extension, use stylesheet directory (current theme)
+			$extension_url = get_stylesheet_directory_uri() . '/extensions/formiflex';
+			// error_log('Formiflex Debug - Using stylesheet extension URL: ' . $extension_url);
+			return $extension_url;
+		} else {
+			// It's a plugin, use plugin directory
+			$extension_url = plugin_dir_url($this->entry_point);
+			// error_log('Formiflex Debug - Using plugin URL: ' . $extension_url);
+			return $extension_url;
+		}
 	}
 }

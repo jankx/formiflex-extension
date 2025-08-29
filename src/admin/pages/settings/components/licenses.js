@@ -1,0 +1,64 @@
+import { Card, CardHeader, CardBody, withFilters } from '@wordpress/components';
+
+import { RawHTML, Fragment } from '@wordpress/element';
+
+import { __, sprintf } from '@wordpress/i18n';
+import AddonLicense from './addonLicense.js';
+import { applyFilters } from '@wordpress/hooks';
+
+const LicensesTab = ( props ) => {
+	const { settings, setSettings } = props;
+
+	const addons = [];
+	const items = [];
+
+	applyFilters( 'formiflex.AddonsLicenses', '', addons );
+
+	for ( const addon in addons ) {
+		const title = addons[ addon ].title;
+		const name = addons[ addon ].name;
+		const icon = addons[ addon ].icon;
+		const optionName = 'formiflex_' + name;
+
+		items.push(
+			<AddonLicense
+				{ ...props }
+				key={ title }
+				icon={ icon }
+				title={ title }
+				name={ name }
+				optionName={ optionName }
+				settings={ settings }
+				addonSettings={ settings[ optionName ] }
+				setSettings={ setSettings }
+			/>
+		);
+	}
+
+	return (
+		<Fragment>
+			<Card>
+				<CardHeader>
+					<h2>{ __( 'Licenses', 'formiflex' ) }</h2>
+				</CardHeader>
+
+				<CardBody>
+					<RawHTML>
+						{ sprintf(
+							/* translators: %s: Addon licenses link. */
+							__(
+								'<p>Here you can add license for %s.</p><p>To get your licenses key go to your %s.</p>',
+								'formiflex'
+							),
+							`<a href="https://formiflex.net/addons/" target="_blank">addons</a>`,
+							`<a href="https://formiflex.net/account/" target="_blank">account</a>`
+						) }
+					</RawHTML>
+				</CardBody>
+			</Card>
+			{ items }
+		</Fragment>
+	);
+};
+
+export default withFilters( 'formiflex.licenses' )( LicensesTab );

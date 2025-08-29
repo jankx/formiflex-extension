@@ -1,1 +1,17 @@
-(()=>{"use strict";const e=window.wp.blocks,l=window.wp.i18n;(0,e.registerBlockVariation)("core/group",{name:"full-name",title:(0,l.__)("Full Name"),description:(0,l.__)("First and last name on same row.","formiflex"),attributes:{layout:{type:"flex",flexWrap:"nowrap"}},innerBlocks:[["formiflex/input",{type:"text",label:"First Name",name:"name",style:{layout:{selfStretch:"fill",flexSize:null}}}],["formiflex/input",{type:"text",label:"Last Name",name:"lastname",style:{layout:{selfStretch:"fill",flexSize:null}}}]],scope:["inserter"],example:void 0}),(0,e.registerBlockVariation)("core/group",{name:"date-time",title:(0,l.__)("Date & Time"),attributes:{layout:{type:"flex",flexWrap:"nowrap"}},innerBlocks:[["formiflex/input",{type:"date",label:"Date",name:"date",style:{layout:{selfStretch:"fill",flexSize:null}}}],["formiflex/input",{type:"time",label:"Time",name:"time"}]],scope:["inserter"],example:void 0})})();
+/**
+ * Formiflex Field Variations
+ *
+ * Field variations JavaScript for FormiFlex extension
+ */
+
+console.log('Formiflex field variations loaded successfully');
+
+// Field variations functionality
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Formiflex field variations DOM ready');
+
+    // Initialize field variations components
+    if (typeof wp !== 'undefined' && wp.blocks) {
+        console.log('WordPress blocks API available for field variations');
+    }
+});

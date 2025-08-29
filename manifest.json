@@ -12,8 +12,8 @@
         "jankx": "2.0.0"
     },
     "caller": {
-        "class": "Jankx\\Extensions\\Formiflex\\FormiflexExtension",
-        "file": "includes/FormiflexExtension.php",
+        "class": "Formiflex\\Extension\\FormiflexExtension",
+        "file": "includes/Extension/FormiflexExtension.php",
         "method": "register_hooks",
         "args": [],
         "autoload": true,

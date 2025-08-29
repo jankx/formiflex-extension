@@ -78,13 +78,16 @@ class Plugin {
 	 * @param string $entry_point The entry point of this plugin.
 	 */
 	public function __construct( $entry_point ) {
+		error_log('Formiflex: Plugin constructor called with entry_point: ' . $entry_point);
 		$this->version = get_file_data( $entry_point, array( 'Version' ) )[0];
 		$this->entry_point = $entry_point;
 		$this->plugin_name = 'formiflex';
+		error_log('Formiflex: Plugin name: ' . $this->plugin_name . ', Version: ' . $this->version);
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		error_log('Formiflex: Plugin constructor completed');
 	}
 
 	/**
@@ -104,6 +107,7 @@ class Plugin {
 	 * @access   private
 	 */
 	private function load_dependencies() {
+		error_log('Formiflex: Loading dependencies...');
 		/**
 		 * The helper files.
 		 */
@@ -113,6 +117,7 @@ class Plugin {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/Utils/register-settings.php';
 
 		$this->loader = new \Formiflex\Loader();
+		error_log('Formiflex: Dependencies loaded, loader created');
 	}
 
 	/**
@@ -139,6 +144,7 @@ class Plugin {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
+		error_log('Formiflex: Defining admin hooks...');
 
 		$plugin_admin = new \Formiflex\Admin( $this->plugin_name, $this->version, $this->entry_point );
 
@@ -148,6 +154,8 @@ class Plugin {
 
 		$activator = new \Formiflex\Activator( $this->plugin_name, $this->version, $this->entry_point );
 		$this->loader->add_action( 'upgrader_process_complete', $activator, 'update_completed', 10, 2 );
+
+		error_log('Formiflex: Admin hooks defined');
 	}
 
 	/**
@@ -203,7 +211,9 @@ class Plugin {
 	 * @since    1.0.0
 	 */
 	public function run() {
+		error_log('Formiflex: Plugin run() called');
 		$this->loader->run();
+		error_log('Formiflex: Plugin run() completed');
 	}
 
 	/**

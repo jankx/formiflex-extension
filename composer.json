@@ -3,7 +3,8 @@
     "description": "Formiflex Extension",
     "autoload": {
         "psr-4": {
-            "Formiflex\\": "includes/"
+            "Formiflex\\": "includes/",
+            "Formiflex\\Extension\\": "includes/Extension/"
         }
     },
     "license": "GPL-2.0-or-later",

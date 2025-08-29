@@ -1,0 +1,89 @@
+$label-width: 190px;
+$margin-left: 0.5em;
+$small-margin: 0 8px;
+
+.wp-block-formiflex-form {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 1em;
+
+	.wp-block-group {
+		align-items: baseline;
+	}
+
+	>.wp-block-group,
+	>.wp-block-formiflex-input,
+	>.wp-block-formiflex-select,
+	>.wp-block-formiflex-textarea,
+	>.wp-block-formiflex-fieldset,
+	>.wp-block-formiflex-button,
+	>.wp-block-formiflex-multichoices {
+		flex-basis: 100%;
+
+		.wp-block-formiflex-button,
+		.wp-block-formiflex-output {
+			flex: 0 1;
+			align-self: stretch;
+		}
+	}
+
+	&.is-style-modern {
+		input, textarea {
+			border: none;
+			border-bottom: 1px solid black;
+			border-radius: 0;
+		}
+	}
+
+	.formiflex-message,
+	.formiflex-debug {
+		flex-basis: 100%;
+	}
+
+	.formiflex-debug {
+		order: 7;
+		pre {
+			white-space: break-spaces;
+		}
+	}
+
+	/* HONEYPOT position */
+	.formiflex-hp {
+		position: absolute !important;
+		left: -5000px;
+	}
+
+	.error, select:user-invalid + .ts-wrapper.formiflex-advanced.invalid > .ts-control {
+		border-color: red;
+	}
+
+	.error-message {
+		color: red;
+		order: 4;
+		display: none;
+	}
+
+	:has(input:user-invalid), :has(select:user-invalid), :has(textarea:user-invalid) {
+		div.error-message {
+			display: block;
+		}
+	}
+
+	.wp-block-formiflex-multichoices:has(.wp-block-formiflex-input input:user-invalid) {
+		.error-message {
+			display: block;
+		}
+	}
+
+	input:user-invalid,
+	select:user-invalid,
+	textarea:user-invalid {
+		border-color: red;
+	}
+
+	select.formiflex-advanced+div.invalid+div.error-message,
+	textarea:user-invalid+div.tox-tinymce+div.error-message {
+		display: block;
+	}
+}

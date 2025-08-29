@@ -1,0 +1,101 @@
+import { select, dispatch } from '@wordpress/data';
+import { addFilter } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
+import {
+	getConstraints,
+	getFieldsType,
+	validate,
+} from '../components/merge-tags/functions';
+
+function validateAll( edits ) {
+	const postType = select( 'core/editor' ).getCurrentPostType();
+
+	if ( 'formiflex_form' !== postType ) {
+		return Promise.resolve( edits );
+	}
+
+	const validation = validate();
+
+	// if form is empty, always valid.
+	if ( ! validation.names.length ) {
+		return Promise.resolve( edits );
+	}
+
+	if ( ! validation.buttons.length ) {
+		return Promise.reject( {
+			message: __( 'Missing button', 'formiflex' ),
+		} );
+	}
+
+	if ( validation.buttons.length > 1 ) {
+		dispatch( 'core/notices' ).createNotice(
+			'warning',
+			__( 'You have more than one button', 'formiflex' ),
+			{
+				id: 'formiflex-notice',
+				isDismissible: true,
+			}
+		);
+	}
+
+	if ( validation.names.some( ( item ) => item === undefined ) ) {
+		dispatch( 'core/notices' ).createNotice(
+			'warning',
+			__( 'One or more fields have no name', 'formiflex' ),
+			{
+				id: 'formiflex-notice',
+				isDismissible: true,
+			}
+		);
+	}
+
+	return Promise.resolve( edits );
+}
+
+addFilter( 'editor.preSavePost', 'editor', ( edits ) => validateAll( edits ) );
+
+addFilter( 'editor.preSavePost', 'editor', ( edits ) => {
+	const postType = select( 'core/editor' ).getCurrentPostType();
+	const meta = select( 'core/editor' ).getCurrentPostAttribute( 'meta' );
+	//const meta = select( 'core/editor' ).getEditedPostAttribute( 'meta' );
+
+	if ( 'formiflex_form' === postType ) {
+		const fields = getFieldsType();
+		const constraints = getConstraints();
+
+		let newEdits;
+
+		// There are already meta edits?
+		if ( edits.meta ) {
+			newEdits = {
+				...edits,
+				meta: {
+					...edits.meta,
+					_formiflex_settings: {
+						...edits.meta._formiflex_settings,
+						constraints,
+						fields,
+					},
+				},
+			};
+		} else {
+			// Add our meta if they're not there
+			const newMeta = {
+				...meta,
+				_formiflex_settings: {
+					...meta._formiflex_settings,
+					constraints,
+					fields,
+				},
+			};
+			newEdits = {
+				...edits,
+				meta: newMeta,
+			};
+		}
+
+		return Promise.resolve( newEdits );
+	}
+
+	return Promise.resolve( edits );
+} );

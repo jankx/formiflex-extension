@@ -10,12 +10,15 @@ namespace Formiflex\Utils;
 
 defined( 'ABSPATH' ) || exit;
 
+error_log('Formiflex: Utils/register-cpt.php loaded');
+
 /**
- * Register FOrmello Forms CPT
+ * Register Formiflex Forms CPT
  *
  * @since 1.0.0
  */
 function register_cpt() {
+	error_log('Formiflex: register_cpt() called');
 
 	$args = array(
 		'labels' => array(
@@ -66,7 +69,9 @@ function register_cpt() {
 			'revisions',
 		),
 	);
+	error_log('Formiflex: Registering post type formiflex_form');
 	register_post_type( 'formiflex_form', $args );
+	error_log('Formiflex: Post type formiflex_form registered');
 }
 
 /**

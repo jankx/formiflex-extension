@@ -70,6 +70,15 @@ class Blocks {
 	 * @since 1.2.0
 	 */
 	public function register_blocks() {
+		error_log('Formiflex: register_blocks() called');
+
+		// Prevent double registration
+		static $registered = false;
+		if ($registered) {
+			error_log('Formiflex: Blocks already registered, skipping...');
+			return;
+		}
+		$registered = true;
 
 		// Requires WP 6.7 min.
 		/*wp_register_block_metadata_collection(
@@ -77,6 +86,7 @@ class Blocks {
 			plugin_dir_path( $this->entry_point ) . 'build/blocks-manifest.php'
 		);*/
 
+		error_log('Formiflex: Registering block types...');
 		register_block_type_from_metadata(
 			plugin_dir_path( $this->entry_point ) . 'build/blocks/library',
 			array(
@@ -119,6 +129,8 @@ class Blocks {
 		register_block_type_from_metadata(
 			plugin_dir_path( $this->entry_point ) . 'build/blocks/button'
 		);
+
+		error_log('Formiflex: All block types registered successfully');
 	}
 
 	/**
@@ -251,10 +263,14 @@ class Blocks {
 			array( 'label' => __( 'Form', 'formiflex' ) )
 		);
 
+		$patterns_file = plugin_dir_path( $this->entry_point ) . 'assets/templates/patterns.json';
+
+		if ( ! file_exists( $patterns_file ) ) {
+			return;
+		}
+
 		$patterns = json_decode(
-			file_get_contents(
-				plugin_dir_path( $this->entry_point ) . 'assets/templates/patterns.json'
-			),
+			file_get_contents( $patterns_file ),
 			true
 		);
 

@@ -14,6 +14,8 @@ use function Formiflex\Utils\formiflex_default_options;
 
 defined( 'ABSPATH' ) || exit;
 
+error_log('Formiflex: Utils/register-settings.php loaded');
+
 /**
  * Register plugin settings.
  *

@@ -1,0 +1,33 @@
+{
+  "name": "formiflex",
+  "version": "2.7.1",
+  "description": "Lightweight Gutenberg contact form builder, blazingly fast with no external dependencies and ReCaptcha support.",
+  "author": "Jankx Team",
+  "license": "GPL-2.0-or-later",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "build:dev": "webpack --mode=development",
+    "build-blocks-manifest": "wp-scripts build-blocks-manifest",
+    "format": "wp-scripts format",
+    "format:src": "wp-scripts format ./src",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "start": "webpack --mode=development --watch",
+    "packages-update": "wp-scripts packages-update"
+  },
+  "devDependencies": {
+    "@wordpress/base-styles": "^5.18.0",
+    "@wordpress/dependency-extraction-webpack-plugin": "^6.18.0",
+    "@wordpress/scripts": "^30.11.0",
+    "mini-css-extract-plugin": "^2.9.1"
+  },
+  "dependencies": {
+    "@tinymce/tinymce-react": "^5.1.1",
+    "@wordpress/dataviews": "^4.14.0",
+    "@wordpress/icons": "^10.18.0",
+    "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
+    "history": "^5.3.0"
+  }
+}

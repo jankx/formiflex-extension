@@ -1,0 +1,13 @@
+/*!***********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/blocks/output/style.scss ***!
+  \***********************************************************************************************************************/
+.wp-block-formiflex-output {
+  min-width: 1rem;
+  min-height: 1rem;
+  border: 1px solid lightgray;
+  align-self: stretch;
+  padding: 0 0.5rem;
+  line-height: 1rem;
+  align-content: center;
+  margin-block-start: 1rem;
+}

@@ -9,6 +9,8 @@ namespace Formiflex\Utils;
 
 defined( 'ABSPATH' ) || exit;
 
+error_log('Formiflex: Utils/templates.php loaded');
+
 /**
  * Add Formiflex templates to patterns
  *

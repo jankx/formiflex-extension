@@ -1,1 +1,34 @@
-.wp-block-formiflex-message{display:block}
+/*!************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/blocks/message/style.scss ***!
+  \************************************************************************************************************************/
+.wp-block-formiflex-message {
+  display: none;
+  box-sizing: border-box;
+  padding: 1em;
+  margin-block-start: 1rem;
+  flex-basis: 100%;
+}
+.wp-block-formiflex-message p {
+  margin: 0;
+}
+.wp-block-formiflex-message.success {
+  display: block;
+  background-color: #dff0d8;
+  border: 1px solid #d0e9c6;
+  color: #3c763d;
+}
+.wp-block-formiflex-message.error:has(p:not(:empty)) {
+  display: block;
+  background-color: #fcf8e3;
+  border: 1px solid #faf2cc;
+  color: #8a6d3b;
+}
+.wp-block-formiflex-message ul:not(:has(li)) {
+  display: none;
+}
+/*!*************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/blocks/message/editor.scss ***!
+  \*************************************************************************************************************************/
+.wp-block-formiflex-message {
+  display: block;
+}
